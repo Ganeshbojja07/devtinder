@@ -72,7 +72,7 @@ const userSchema = new Schema(
   { timestamps: true },
 ); // this will automatically add createdAt and updatedAt fields to the schema
 
-userSchema.methods.getJWT = function (req,res) {
+userSchema.methods.getJWT = function (req, res) {
   const user = this;
   try {
     const token = jwt.sign({ _id: user._id }, "Ganesh&02", { expiresIn: "7d" });
@@ -85,11 +85,10 @@ userSchema.methods.getJWT = function (req,res) {
   }
 };
 
-userSchema.methods.validatePassword=async function(password){
-  const user=this;
-  const isValid=await bcrypt.compare(password, user.password);
+userSchema.methods.validatePassword = async function (password) {
+  const user = this;
+  const isValid = await bcrypt.compare(password, user.password);
   return isValid;
+};
 
-}
-
-module.exports = model("Users", userSchema);
+module.exports = model("User", userSchema);
