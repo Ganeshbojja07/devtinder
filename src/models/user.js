@@ -55,6 +55,8 @@ const userSchema = new Schema(
     },
     photoUrl: {
       type: String,
+      default:
+        "https://img.magnific.com/premium-vector/default-avatar-profile-icon-gray-placeholder-vector-illustration_514344-14757.jpg?semt=ais_test_b&w=740&q=80",
       validate(value) {
         if (!validator.isURL(value)) {
           throw new Error("Invalid URL");

@@ -2,11 +2,11 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
 const userAuth = async (req, res, next) => {
-  const { token } = req.cookies;
-  if (!token) {
-    return res.status(401).json({ message: "Invalid token" });
-  }
   try {
+    const { token } = req.cookies;
+    if (!token) {
+      return res.status(401).json({ message: "Please login" });
+    }
     const decoded = jwt.verify(token, "Ganesh&02");
     const user = await User.findById(decoded._id);
     if (!user) {

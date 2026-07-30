@@ -13,7 +13,10 @@ router.get("/users/requests/received", userAuth, async (req, res) => {
       toUserId: loggedInUser._id,
       status: "interested",
     }).populate("fromUserId", USER_SAFE_DATA);
-    res.json({ message: "Requests fetched successfully", data: connections });
+    res.json({
+      message: "Requests fetched successfully",
+      data: connections,
+    });
   } catch (err) {
     res.status(500).send({ success: false, message: "Internal Server Error" });
   }
@@ -40,6 +43,9 @@ router.get("/users/connections", userAuth, async (req, res) => {
 router.get("/users/feed", userAuth, async (req, res) => {
   try {
     const userId = req.user._id;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
 
     const connections = await ConnectionRequest.find({
       $or: [{ fromUserId: userId }, { toUserId: userId }],
@@ -49,11 +55,14 @@ router.get("/users/feed", userAuth, async (req, res) => {
     );
     const feed = await User.find({
       _id: { $nin: [userId, ...excludedUserIds] },
-    }).select(USER_SAFE_DATA);
+    })
+      .select(USER_SAFE_DATA)
+      .skip(skip)
+      .limit(limit);
     res.json({ message: "Feed fetched successfully", data: feed });
   } catch (err) {
     console.error("Error fetching users:", err.message);
-    res.status(500).send({ success: false, message: "Internal Server Error" });
+    res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 });
 

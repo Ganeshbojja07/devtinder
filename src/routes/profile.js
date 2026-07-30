@@ -25,12 +25,12 @@ router.get("/profile/view", userAuth, async (req, res) => {
     const userFound = req.user;
 
     if (!userFound) {
-      return res.status(404).send("User not found");
+      return res.status(404).json({ message: "User not found" });
     }
-    res.send(userFound);
+    res.json({ message: "User fetched successully", data: userFound });
   } catch (err) {
     console.error("Error fetching user:", err);
-    res.status(500).send("Error fetching user: " + err.message);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 });
 
@@ -62,7 +62,7 @@ router.patch("/profile/edit", userAuth, async (req, res) => {
     });
   } catch (err) {
     console.error("Error updating profile:", err);
-    res.status(500).send("Error updating profile: " + err.message);
+    res.status(500).json({ message: err.message });
   }
 });
 
