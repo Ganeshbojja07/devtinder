@@ -57,7 +57,7 @@ router.post("/payment/webhook", async (req, res) => {
     const { event, payload } = req.body;
     const signature = req.get("X-Razorpay-Signature");
     const isWehbookValid = validateWebhookSignature(
-      JSON.stringify(payload),
+      JSON.stringify(req.body),
       signature,
       process.env.WEBHOOK_SECRET,
     );
