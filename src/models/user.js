@@ -53,6 +53,13 @@ const userSchema = new Schema(
         } // by default validator will work only on insert, if we want it to work on update as well, we need to set runValidators: true in the update query options.
       },
     },
+    isPremium: {
+      type: Boolean,
+      default: false,
+    },
+    memberShipType: {
+      type: String,
+    },
     photoUrl: {
       type: String,
       default:
@@ -77,7 +84,9 @@ const userSchema = new Schema(
 userSchema.methods.getJWT = function (req, res) {
   const user = this;
   try {
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
     res.cookie("token", token, {
       expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
     });

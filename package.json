@@ -15,14 +15,19 @@
   "author": "Ganesh Bojja",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.1103.0",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
+    "date-fns": "^4.4.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.8.0",
+    "node-cron": "^4.6.0",
     "nodemon": "^3.1.14",
+    "razorpay": "^2.9.8",
+    "uuid": "^8.3.2",
     "validator": "^13.15.35"
   }
 }
