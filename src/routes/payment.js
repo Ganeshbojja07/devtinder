@@ -105,7 +105,7 @@ router.post("/payment/webhook", async (req, res) => {
   }
 });
 
-router.post("/payment/status", userAuth, async (req, res) => {
+router.get("/payment/status", userAuth, async (req, res) => {
   try {
     const { isPremium, memberShipType } = req.user;
     res.json({
