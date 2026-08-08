@@ -6,7 +6,9 @@ const Payment = require("../models/payment");
 const { v4: uuidv4 } = require("uuid");
 const { prices } = require("../constants");
 const User = require("../models/user");
-const {validateWebhookSignature} = require("razorpay/dist/utils/razorpay-utils");
+const {
+  validateWebhookSignature,
+} = require("razorpay/dist/utils/razorpay-utils");
 
 router.post("/payment/create", userAuth, async (req, res) => {
   const { memberShipType, planId } = req.body;
@@ -53,7 +55,7 @@ router.post("/payment/create", userAuth, async (req, res) => {
 router.post("/payment/webhook", async (req, res) => {
   try {
     const { event, payload } = req.body;
-    const signature = req.headers["X-Razorpay-Signature"];
+    const signature = req.get("X-Razorpay-Signature");
     const isWehbookValid = validateWebhookSignature(
       JSON.stringify(payload),
       signature,
